@@ -1,0 +1,75 @@
+<%-include('../partials/header.ejs')%>
+<%-include('../partials/navbar.ejs')%>
+<%-include('../partials/flash.ejs')%>
+
+
+<div class="row mx-auto" style="justify-content: space-evenly;">
+  <div class="col-lg-5 mt-5" style="overflow: scroll; max-height: 400px;">
+    <%for(let [key, value] of map){%>
+      <%for(let item of user.cart){%>
+        <%if(item.equals(key) && map.has(key)){%>
+          <div class="card mb-3" style="max-width: 540px; height: 110px;">
+            <div class="row g-0">
+              <div class="col-md-4" style="height:100px; " >
+                <img src="<%=item.img%>" class="img-fluid rounded-start" style="height: 100%; width: 180px;" alt="...">
+              </div>
+              <div class="col-md-5">
+                <div class="card-body">
+                  <h5 class="card-title"><%=item.name%></h5>
+                  <p class="card-text">&#8377;<%=item.price%></p>
+                  <p class="card-text"><%=item.desc%></p>
+                </div>
+              </div>
+              <div class="col-md-2" style="justify-content: center; display: flex; align-items: center;">
+                <!-- <button type="button" class="btn btn-danger remove-item" productID="<%=item._id%>">-</button> -->
+                <form action="/user/<%=item._id%>/remove" method="post">
+                  <button type="submit" class="btn btn-danger" productID="<%=item._id%>">-</button>
+                </form>
+                <span class="badge text-bg-light"><%=map.get(key)%></span>
+                <!-- <button type="button" class="btn btn-success add-item" productID="<%=item._id%>">+</button> -->
+                <form action="/user/<%=item._id%>/add" method="post">
+                  <button type="submit" class="btn btn-success" productID="<%=item._id%>">+</button>
+                </form>
+              </div>
+            </div>
+          </div>
+          <%map.delete(key)%>
+        <%}%>
+        
+      <%}%>
+    <%}%>
+  </div>
+
+
+
+
+
+
+    <div class="col-lg-4 mt-5">
+        <ul class="list-group mt-5">
+            <% for(let item of user.cart) {%>
+                <li class="list-group-item"><span class="fw-bold"><%=item.name%> - </span>&#8377;<%=item.price%> <span></span></li>
+            <% } %> 
+            <li class="list-group-item fw-bold">Total Amount : &#8377;<%=totalAmount%></li>
+        </ul>
+
+        <form action="/payment_gateway/payumoney" method="POST">
+          <input type="hidden" name="amount" value="<%=totalAmount%>"/>
+          <input type="hidden" name="phone" value="9999999999" />
+          <input type="hidden" name="service_provider" 
+           value="payu_paisa"/>
+          <input type="hidden" class="product" name="productinfo" 
+           value="<%=productInfo%>"/>
+           
+           <button type="submit" class="btn btn-sm btn-success my-3" >Checkout</button>
+           <!-- <input type="submit" value="Pay"/> -->
+          </form>
+
+    </div>
+</div>
+
+<!-- <script src="js/cart.js"></script> -->
+<script src="../js/cart.js"></script>
+
+
+<%-include('../partials/footer.ejs')%>

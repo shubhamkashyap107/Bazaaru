@@ -1,0 +1,75 @@
+<%-include('../partials/header.ejs')%>
+<%-include('../partials/navbar.ejs')%>
+<%-include('../partials/flash.ejs')%>
+
+<div class="row">
+  <form action="/register" method="post" class="needs-validation mt-3" novalidate>
+    <div class="col-lg-3 mx-auto mb-3">
+      <label for="validationCustomemail" class="form-label">Email</label>
+      <div class="input-group has-validation">
+        <input type="email" class="form-control" id="validationCustomemail" aria-describedby="inputGroupPrepend" required name="email">
+        <div class="invalid-feedback">
+          Please enter your email.
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 mx-auto mb-3">
+      <label for="validationCustomUsername" class="form-label">Username</label>
+      <div class="input-group has-validation">
+        <span class="input-group-text" id="inputGroupPrepend">@</span>
+        <input maxlength="20" type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required name="username">
+        <div class="invalid-feedback">
+          Please enter a username.
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 mx-auto mb-3">
+      <label for="validationCustom03" class="form-label">Passsword</label>
+      <input type="password" class="form-control" id="validationCustom03" required name="password">
+      <div class="invalid-feedback">
+        Please enter a password.
+      </div>
+    </div>
+    <div class="col-lg-3 mx-auto mb-3">
+      <label for="validationCustom04" class="form-label">Account Type</label>
+      <select class="form-select" id="validationCustom04" required name="role">
+        <option selected disabled value="">Choose...</option>
+        <option value="buyer">Buyer</option>
+        <option value="seller">Seller</option>
+      </select>
+      <div class="invalid-feedback">
+        Please select an account type.
+      </div>
+    </div>
+    <div class="col-lg-3 mx-auto">
+      <p>Already a user? <a href="/login">Sign in</a></p>
+      <button type="submit" class="btn btn-primary">Log in</button>
+    </div>
+  </form>
+
+  
+</div>
+
+
+<script>
+  (() => {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  const forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+
+      form.classList.add('was-validated')
+    }, false)
+  })
+})()
+</script>
+
+<%-include('../partials/footer.ejs')%>

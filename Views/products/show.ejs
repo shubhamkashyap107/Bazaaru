@@ -1,0 +1,92 @@
+<%-include('../partials/header')%>
+<%-include('../partials/navbar')%>
+<%-include('../partials/flash')%>
+
+
+<section class="container">
+    <div class="row">
+        <div class="col-lg-6">
+          
+            <div class="card shadow-sm mx-auto mt-5" style="width: 22rem;">
+                <img src="<%=product.img%>" class="card-img-top" alt="item image">
+                <div class="card-body">
+                <h5 class="card-title"><%= product.name %> </h5>
+                <p class="card-text"><%= product.desc %></p>
+                <h5 class="card-title">&#8377;<%= product.price %> </h5>
+                <!-- <a href="#" class="btn btn-success btn-sm">Buy</a> -->
+                <form class="d-inline-block" action="/user/<%=product._id%>/add" method="POST">
+                    <button class="btn btn-success btn-sm">Add To Cart</button>
+                </form>
+                
+                <%if(currentUser && currentUser.role == 'seller'){%>
+                    <a href="/products/<%=product._id%>/edit" class="btn btn-info btn-sm">Edit</a>
+                    <form class="d-inline-block" action="/products/<%=product._id%>?_method=DELETE" method="POST">
+                        <button class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                <%}%>
+                    
+             
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <form action="/products/<%=product._id%>/reviews" method="post" class="mt-5">
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Your Name</label>
+                    <input type="text" class="form-control" id="exampleFormControlInput1" name="name" >
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label">Review</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="review"></textarea>
+                </div>
+                  <div class="mb-3">
+                    <!-- <label for="customRange1" class="form-label">Example range</label>
+                    <input type="range" class="form-range" id="customRange1" step="1" min="0" max="5"> -->
+                    <fieldset class="starability-basic">
+                        <legend>Rating:</legend>
+                        <input type="radio" id="no-rate" class="input-no-rate" name="rating" value="0" checked aria-label="No rating." />
+                        <input type="radio" id="first-rate1" name="rating" value="1" />
+                        <label for="first-rate1" title="Terrible">1 star</label>
+                        <input type="radio" id="first-rate2" name="rating" value="2" />
+                        <label for="first-rate2" title="Not good">2 stars</label>
+                        <input type="radio" id="first-rate3" name="rating" value="3" />
+                        <label for="first-rate3" title="Average">3 stars</label>
+                        <input type="radio" id="first-rate4" name="rating" value="4" />
+                        <label for="first-rate4" title="Very good">4 stars</label>
+                        <input type="radio" id="first-rate5" name="rating" value="5" />
+                        <label for="first-rate5" title="Amazing">5 stars</label>
+                      </fieldset>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Review</button>
+            </form>
+
+        </div>
+
+        <%if(product.reviews.length >= 1){%>
+            <div class="col-lg-4 mt-5" style="width: 100%; height: 300px; overflow: scroll;">
+                <h2 style="font-family: sans-serif;">Reviews</h2>
+                <section>
+                    <%for(let item of product.reviews){%>
+                              <blockquote class="blockquote mb-5" style="border: 1px solid white;">
+                                <p class="starability-result" data-rating="<%=item.rating%>">
+                                    
+                                  </p>
+                                <p><%=item.review%></p>
+                                <footer class="blockquote-footer">By <%=item.name%></footer>
+                              </blockquote>
+                    <%}%>
+                </section>
+            </div>
+        <%}%>
+
+        
+
+    </div>
+</section>
+
+
+
+
+
+<%-include('../partials/footer.ejs')%>

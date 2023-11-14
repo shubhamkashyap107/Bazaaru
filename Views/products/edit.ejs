@@ -1,0 +1,77 @@
+<%-include('../partials/header.ejs')%>
+<%-include('../partials/navbar.ejs')%>
+
+<div class="container mt-5">
+    <div class="row">
+        <form action="/products/<%=product._id%>/edit?_method=PATCH" class="needs-validation" method="post" novalidate>
+            <div class="mb-3">
+                <label for="category" class="form-label">Category</label>
+                <select class="form-select" id="category" required name="category">
+                  <option selected disabled value="">Choose...</option>
+                  <option value="gadgets">Gadgets</option>
+                  <option value="fashion">Fashion</option>
+                  <option value="grocery">Grocery</option>
+                  <option value="others">Others</option>
+                </select>
+                <div class="invalid-feedback">
+                  Please select a valid state.
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="name" class="form-label">Product Name</label>
+                <input type="text" class="form-control" id="name" required name="name" value="<%=product.name%>">
+                <div class="invalid-feedback">
+                  Please provide a valid name.
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="price" class="form-label">Price</label>
+                <input type="number" class="form-control" id="price" required name="price" value="<%=product.price%>">
+                <div class="invalid-feedback">
+                  Please provide a price.
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="image" class="form-label">Image</label>
+                <input type="text" class="form-control" id="image" required name="img" value="<%=product.img%>">
+                <div class="invalid-feedback">
+                  Please provide image url.
+                </div>
+              </div>
+              <div class="form-floating mb-3">
+                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" name="desc" required><%=product.desc%></textarea>
+                <label for="floatingTextarea">Description</label>
+                <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                  <div class="invalid-feedback">
+                    Tell us about the product.
+                  </div>
+              </div>
+              <button type="submit" class="btn btn-success">Save Changes</button>
+        </form>
+       
+</div>
+
+
+
+<script>// Example starter JavaScript for disabling form submissions if there are invalid fields
+    (() => {
+      'use strict'
+    
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      const forms = document.querySelectorAll('.needs-validation')
+    
+      // Loop over them and prevent submission
+      Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+    
+          form.classList.add('was-validated')
+        }, false)
+      })
+    })()</script>
+<%-include('../partials/footer.ejs')%>
