@@ -28,8 +28,7 @@ const paymentRoutes = require('./Routes/Payment');
 
 
 
-const dbURL = 'mongodb+srv://shubhamkashyap107:bYHBP1YCwCq0fExS@ecom-cluster.jketpdg.mongodb.net/?retryWrites=true&w=majority';
-
+const dbURL = process.env.DB;
 mongoose.set('strictQuery', true);
 mongoose.connect(dbURL)
     .then(() => {
